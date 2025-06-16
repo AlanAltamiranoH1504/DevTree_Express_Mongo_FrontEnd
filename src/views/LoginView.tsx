@@ -1,13 +1,16 @@
 import {Fragment} from "react";
 import {Link} from "react-router-dom";
+import FormLoginView from "./FormLoginView";
 
 const LoginView = () => {
     return(
         <Fragment>
-            <h2 className="text-white font-bold uppercase text-4xl text-center">Inicia Sesión</h2>
+            <h2 className="text-white text-center text-4xl font-bold">Inicia Sesión</h2>
 
-            <nav>
-                <Link to="/auth/registro">Registrate</Link>
+            <FormLoginView />
+            <nav className="mt-5 space-y-3">
+                <Link className="text-white text-center text-lg block hover:text-lime-600 hover:font-bold" to="/auth/registro">Crear Cuenta</Link>
+                <Link to="" className="text-white text-center text-lg block hover:text-lime-600 hover:font-bold">Olvide Contraseña</Link>
             </nav>
         </Fragment>
     )
