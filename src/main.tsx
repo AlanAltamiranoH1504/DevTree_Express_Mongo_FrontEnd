@@ -1,10 +1,12 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
 import './index.css'
 import Router from "./router";
+import {ToastContainer} from "react-toastify";
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Router />
-  </StrictMode>,
+    <StrictMode>
+        <Router/>
+        <ToastContainer/>
+    </StrictMode>,
 )

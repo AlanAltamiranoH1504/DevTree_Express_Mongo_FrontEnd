@@ -1,11 +1,28 @@
 import {Fragment} from "react";
 import {useForm} from "react-hook-form";
+import {toast} from "react-toastify";
+
+import type {FormRegistro} from "../types";
+import {clienteAxios} from "../axios/ClienteAxios";
 
 const FormRegisterView = () => {
-    const {register, watch, handleSubmit, formState: {errors}} = useForm();
-    const password = watch("password")
-    function saveCuenta() {
-        console.log("Guardando informacion");
+    const {register, handleSubmit, formState: {errors}} = useForm<FormRegistro>();
+
+    async function saveCuenta(data: FormRegistro) {
+        const dataUsuario: FormRegistro = {
+            nombre: data.nombre,
+            email: data.email,
+            handle: data.handle,
+            password: data.password
+        };
+        try {
+            const response = await clienteAxios.post("/auth/registro", dataUsuario);
+            if (response.status === 201){
+                toast.success(response.data.msg);
+            }
+        }catch (e) {
+            toast.error(e.response.data.msg);
+        }
     }
 
     return (
@@ -14,7 +31,8 @@ const FormRegisterView = () => {
                 <form
                     onSubmit={handleSubmit(saveCuenta)}
                 >
-                    <h2 className="text-center text-lg font-bold mb-2 text-lime-600 p-1 rounded-lg">Diseña tu propio centro de enlaces</h2>
+                    <h2 className="text-center text-lg font-bold mb-2 text-lime-600 p-1 rounded-lg">Diseña tu propio
+                        centro de enlaces</h2>
                     <div className="mb-2 p-2">
                         <label htmlFor="nombre"
                                className="mb-2 font-semibold block text-lg uppercase text-slate-600">Nombre: </label>
@@ -91,10 +109,6 @@ const FormRegisterView = () => {
                             type="password"
                             className="p-2 border w-full rounded-lg border-slate-700"
                             placeholder="Confirmación de Password"
-                            {...register("password_confirmation", {
-                                required: "El campo es obligatorio",
-                                validate: (value) => value === password || "Los passwords no coincide"
-                            })}
                         />
                     </div>
                     <div className="mb-2 p-3">
