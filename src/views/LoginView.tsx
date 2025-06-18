@@ -1,6 +1,6 @@
 import {Fragment} from "react";
 import {Link} from "react-router-dom";
-import FormLoginView from "./FormLoginView";
+import FormLoginView from "../components/FormLoginView";
 
 const LoginView = () => {
     return(

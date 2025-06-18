@@ -1,6 +1,6 @@
 import {Fragment} from "react";
 import {Link} from "react-router-dom";
-import FormRegisterView from "./FormRegisterView";
+import FormRegisterView from "../components/FormRegisterView";
 
 const RegisterView = () => {
     return (

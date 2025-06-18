@@ -1,11 +1,24 @@
 import {Fragment} from "react";
 import {useForm} from "react-hook-form";
+import type {FormLogin} from "../types";
+import {clienteAxios} from "../axios/ClienteAxios";
+import {toast} from "react-toastify";
 
 const FormLoginView = () => {
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm<FormLogin>();
 
-    function login() {
-        console.log("Iniciando sesion");
+    async function login(data: FormLogin) {
+        try {
+            const response = await clienteAxios.post("/login", data);
+            if (response.status === 200){
+                const {jwt} = response.data;
+                localStorage.setItem("AUTH_JWT", jwt);
+                toast.success(response.data.message);
+            }
+        }catch (e) {
+            // @ts-ignore
+            toast.error(e.response.data.error);
+        }
     }
 
     return (
@@ -20,7 +33,11 @@ const FormLoginView = () => {
                         <input type="email" className="border p-2 border-slate-700 w-full rounded-lg"
                                placeholder="Email de registro"
                                {...register("email", {
-                                   required: "El email es obligatorio"
+                                   required: "El email es obligatorio",
+                                   pattern: {
+                                       value: /\S+@\S+\.\S+/,
+                                       message: "Formato no valido para el email"
+                                   }
                                })}
                         />
                         <div className="text-red-700">

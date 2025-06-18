@@ -21,6 +21,7 @@ const FormRegisterView = () => {
                 toast.success(response.data.msg);
             }
         }catch (e) {
+            // @ts-ignore
             toast.error(e.response.data.msg);
         }
     }

@@ -5,4 +5,4 @@ export type FormRegistro = {
     password: string;
 }
 
-export type FormLogin = Pick<FormRegistro, "nombre" | "password">;
+export type FormLogin = Pick<FormRegistro, "email" | "password">;
