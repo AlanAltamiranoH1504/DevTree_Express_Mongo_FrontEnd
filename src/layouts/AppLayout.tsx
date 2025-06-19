@@ -1,8 +1,18 @@
 import {Fragment} from "react";
 import {Link, Outlet} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
 import NavigationTabs from "../components/NavigationTabs";
+import {getUsuarioEnSesion} from "../api/DevTreeAPI";
 
 const AppLayout = () => {
+
+    const {data, isLoading, error} = useQuery({
+        queryKey: ["usuarioInSession"],
+        queryFn: getUsuarioEnSesion,
+        refetchOnWindowFocus: false
+    });
+
+    console.log(data);
     return (
         <Fragment>
             <header className="bg-slate-900 py-5">
