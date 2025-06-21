@@ -3,8 +3,10 @@ import {useForm} from "react-hook-form";
 import type {FormLogin} from "../types";
 import {clienteAxios} from "../axios/ClienteAxios";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const FormLoginView = () => {
+    const navigate = useNavigate();
     const {register, handleSubmit, formState: {errors}} = useForm<FormLogin>();
 
     async function login(data: FormLogin) {
@@ -14,6 +16,7 @@ const FormLoginView = () => {
                 const {jwt} = response.data;
                 localStorage.setItem("AUTH_JWT", jwt);
                 toast.success(response.data.message);
+                navigate("/administracion");
             }
         }catch (e) {
             // @ts-ignore

@@ -4,9 +4,11 @@ import {toast} from "react-toastify";
 
 import type {FormRegistro} from "../types";
 import {clienteAxios} from "../axios/ClienteAxios";
+import {useNavigate} from "react-router-dom";
 
 const FormRegisterView = () => {
     const {register, handleSubmit, formState: {errors}} = useForm<FormRegistro>();
+    const navigate = useNavigate();
 
     async function saveCuenta(data: FormRegistro) {
         const dataUsuario: FormRegistro = {
@@ -19,6 +21,7 @@ const FormRegisterView = () => {
             const response = await clienteAxios.post("/auth/registro", dataUsuario);
             if (response.status === 201){
                 toast.success(response.data.msg);
+                navigate("/auth/login");
             }
         }catch (e) {
             // @ts-ignore
