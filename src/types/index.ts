@@ -10,11 +10,14 @@ export type UsuarioLogeado = {
     email: string;
     handle: string;
     descripcion: string;
+    imagen: string;
+    urlImagen: string;
 }
 
 export type UsuarioUpdate = {
     handle: string;
     descripcion: string;
+    imagen: string;
 }
 
 export type FormLogin = Pick<FormRegistro, "email" | "password">;

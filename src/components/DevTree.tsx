@@ -41,7 +41,7 @@ const DevTree = ({data}: DevTreeProps) => {
                             <Outlet/>
                         </div>
                         <div className="w-full md:w-96 bg-slate-900 px-5 py-10 space-y-6">
-
+                            <img className="rounded-lg p-5 bg-white shadow" src={data.urlImagen}/>
                         </div>
                     </div>
                 </main>

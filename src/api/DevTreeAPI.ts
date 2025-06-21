@@ -16,6 +16,7 @@ export async function getUsuarioEnSesion() {
 }
 
 export async function updateInformacionUsuario(informacion: UsuarioUpdate) {
+    // eslint-disable-next-line no-useless-catch
     try {
         const {data} = await clienteAxios.put("/usuarios", informacion, {
             headers: {
@@ -23,6 +24,21 @@ export async function updateInformacionUsuario(informacion: UsuarioUpdate) {
             }
         })
         return data;
+    }catch (e) {
+        throw e;
+    }
+}
+
+export async function updateImagenPerfil(innformacion: FormData) {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const response = await clienteAxios.post("/imagenes", innformacion, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("AUTH_JWT"),
+                "Content-Type": "multipart/form-data"
+            }
+        });
+        return  response.data;
     }catch (e) {
         throw e;
     }

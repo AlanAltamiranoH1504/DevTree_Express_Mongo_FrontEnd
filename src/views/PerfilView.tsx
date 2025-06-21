@@ -1,8 +1,9 @@
 import {useForm} from "react-hook-form";
 import type {UsuarioLogeado, UsuarioUpdate} from "../types";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {updateInformacionUsuario} from "../api/DevTreeAPI";
+import {updateImagenPerfil, updateInformacionUsuario} from "../api/DevTreeAPI";
 import {toast} from "react-toastify";
+import axios from "axios";
 
 
 const PerfilView = () => {
@@ -16,8 +17,11 @@ const PerfilView = () => {
         }
     });
 
-    function actualizarPerfil(data: UsuarioUpdate){
+    function actualizarPerfil(data: UsuarioUpdate) {
         mutation.mutate(data);
+        const formData = new FormData();
+        formData.append("imagen", data.imagen[0]);
+        mutationImagenPerfil.mutate(formData);
     }
 
     const mutation = useMutation({
@@ -26,11 +30,30 @@ const PerfilView = () => {
             toast.success(data.msg);
             queryClient.invalidateQueries({
                 queryKey: ["usuarioInSession"],
-            })
+            });
         },
         onError: (error) => {
-            // @ts-ignore
-            toast.error(error.response.data.msg);
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data.msg);
+            } else {
+                toast.error("Ocurrio un error inesperado en la actualización de informacion");
+            }
+        }
+    });
+
+    const mutationImagenPerfil = useMutation({
+        mutationFn: updateImagenPerfil,
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["usuarioInSession"],
+            });
+        },
+        onError: (error) => {
+            if (axios.isAxiosError(error)) {
+                toast.error(`${error.response?.data.error} Imagen no subida.`);
+            } else {
+                toast.error("Ocurrio un error inesperado en la subida de imagen.")
+            }
         }
     });
 
@@ -38,6 +61,7 @@ const PerfilView = () => {
         <form
             className="bg-white p-10 rounded-lg space-y-5"
             onSubmit={handleSubmit(actualizarPerfil)}
+            encType="multipart/form-data"
         >
             <legend className="text-2xl font-semibold text-slate-900 text-center">Editar Información</legend>
             <div className="grid grid-cols-1 gap-2">
@@ -67,16 +91,14 @@ const PerfilView = () => {
                 <label htmlFor="imagen" className="font-semibold">Imagen</label>
                 <input
                     type="file"
-                    name="imagen"
                     id="imagen"
                     className="border rounded-lg bg-slate-100 p-2"
                     accept="image/*"
-                    onChange={() => {
-                        console.log("Imagen cargada")
-                    }}
+                    {...register("imagen")}
                 />
             </div>
-            <input  type={"submit"} value={"Guardar Información"} className="p-2 border rounded-lg bg-slate-900 text-white w-full font-semibold"/>
+            <input type={"submit"} value={"Guardar Información"}
+                   className="p-2 border rounded-lg bg-slate-900 text-white w-full font-semibold"/>
         </form>
     );
 }
