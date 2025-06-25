@@ -2,10 +2,11 @@ import NavigationTabs from "./NavigationTabs";
 import {Link, Outlet} from "react-router-dom";
 import type {UsuarioLogeado} from "../types";
 
-type DevTreeProps ={
+type DevTreeProps = {
     data: UsuarioLogeado
 }
 const DevTree = ({data}: DevTreeProps) => {
+    const imagenPerfil = data.urlImagen.trim() === "" ? "/public/perfil.png" : data.urlImagen;
     return (
         <>
             <header className="bg-slate-900 py-5">
@@ -33,7 +34,8 @@ const DevTree = ({data}: DevTreeProps) => {
                             to={''}
                             target="_blank"
                             rel="noreferrer noopener"
-                        >Visitar Mi Perfil: <span className="text-lime-500 hover:text-lime-600">{data.handle}</span></Link>
+                        >Visitar Mi Perfil: <span
+                            className="text-lime-500 hover:text-lime-600">{data.handle}</span></Link>
                     </div>
 
                     <div className="flex flex-col md:flex-row gap-10 mt-10">
@@ -41,7 +43,9 @@ const DevTree = ({data}: DevTreeProps) => {
                             <Outlet/>
                         </div>
                         <div className="w-full md:w-96 bg-slate-900 px-5 py-10 space-y-6">
-                            <img className="rounded-lg p-5 bg-white shadow" src={data.urlImagen}/>
+                            <p className="text-center text-4xl text-lime-500 font-bold">{data.handle}</p>
+                            <img className="rounded-lg p-5 bg-white shadow" src={imagenPerfil} alt="Imagen de perfil"/>
+                            <p className="text-center text-lg font-black text-white">{data.descripcion}</p>
                         </div>
                     </div>
                 </main>

@@ -19,9 +19,11 @@ const PerfilView = () => {
 
     function actualizarPerfil(data: UsuarioUpdate) {
         mutation.mutate(data);
-        const formData = new FormData();
-        formData.append("imagen", data.imagen[0]);
-        mutationImagenPerfil.mutate(formData);
+        if (data.imagen[0]) {
+            const formData = new FormData();
+            formData.append("imagen", data.imagen[0]);
+            mutationImagenPerfil.mutate(formData);
+        }
     }
 
     const mutation = useMutation({

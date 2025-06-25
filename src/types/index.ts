@@ -21,3 +21,13 @@ export type UsuarioUpdate = {
 }
 
 export type FormLogin = Pick<FormRegistro, "email" | "password">;
+
+
+export type SocialNetwork = {
+    id: number;
+    nombre: string;
+    url: string;
+    enabled: boolean;
+}
+
+export type DevTreeLink = Pick<SocialNetwork, "nombre" | "url" | "enabled">
