@@ -1,12 +1,25 @@
 import NavigationTabs from "./NavigationTabs";
 import {Link, Outlet} from "react-router-dom";
-import type {UsuarioLogeado} from "../types";
+import type {SocialNetwork, UsuarioLogeado} from "../types";
+import {useEffect, useState} from "react";
+import LinkHabiltado from "./LinkHabiltado";
 
 type DevTreeProps = {
     data: UsuarioLogeado
 }
 const DevTree = ({data}: DevTreeProps) => {
     const imagenPerfil = data.urlImagen.trim() === "" ? "/public/perfil.png" : data.urlImagen;
+    const linksArreglo = JSON.parse(data.links);
+    const linksHabilitados = linksArreglo.filter((link: SocialNetwork) => {
+        return link.enabled;
+    });
+
+    const [enableLinks, setEnableLinks] = useState<SocialNetwork[]>(linksHabilitados);
+    useEffect(() => {
+        setEnableLinks(linksArreglo.filter((link: SocialNetwork) => {
+            return link.enabled;
+        }));
+    }, [data])
     return (
         <>
             <header className="bg-slate-900 py-5">
@@ -46,6 +59,14 @@ const DevTree = ({data}: DevTreeProps) => {
                             <p className="text-center text-4xl text-lime-500 font-bold">{data.handle}</p>
                             <img className="rounded-lg p-5 bg-white shadow" src={imagenPerfil} alt="Imagen de perfil"/>
                             <p className="text-center text-lg font-black text-white">{data.descripcion}</p>
+                            <div className="mt-20 flex flex-col gap-5">
+                                {enableLinks.map((link: SocialNetwork) => {
+                                    return <LinkHabiltado
+                                        key={link.id}
+                                        link={link}
+                                    />
+                                })}
+                            </div>
                         </div>
                     </div>
                 </main>

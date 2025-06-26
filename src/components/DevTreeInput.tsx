@@ -10,7 +10,6 @@ type DevTreInputProps = {
 };
 
 const DevTreeInput = ({link, handleURLChange, handleEnableLink}: DevTreInputProps) => {
-
     return (
         <div className="bg-white shadow-sm p-5 flex items-center gap-3 rounded-lg">
             <div

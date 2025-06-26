@@ -1,19 +1,26 @@
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {social} from "../data/social";
 import DevTreeInput from "../components/DevTreeInput";
 import * as React from "react";
 import {toast} from "react-toastify";
 import {isValidURL} from "../utils";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {usuarioUpdateLinks} from "../api/DevTreeAPI";
+import type {SocialNetwork} from "../types";
 
 const LinkTreeView = () => {
     const [devTreeLinks, setDevTreeLinks] = useState(social);
+    const queryClient = useQueryClient();
+    const userInCache = queryClient.getQueryData(["usuarioInSession"]);
+    const linksJson = JSON.parse(userInCache.links);
 
     const mutationLinks = useMutation({
         mutationFn: usuarioUpdateLinks,
         onSuccess: () => {
             toast.success("Links agregados correctamente");
+            queryClient.invalidateQueries({
+                queryKey: ["usuarioInSession"]
+            });
         },
         onError: () => {
             toast.error("Error en el guardado del link")
@@ -54,6 +61,21 @@ const LinkTreeView = () => {
     const saveLinks = () => {
         mutationLinks.mutate({links: devTreeLinks});
     }
+
+    useEffect(() => {
+        const updatedData = devTreeLinks.map((item) => {
+            const userLink = linksJson.find((link: SocialNetwork) => link.nombre === item.nombre)
+            if (userLink){
+                return {
+                    ...item,
+                    url: userLink.url,
+                    enabled: userLink.enabled
+                }
+            }
+            return item;
+        });
+        setDevTreeLinks(updatedData);
+    }, [])
     return (
         <Fragment>
             <div className="space-y-5">

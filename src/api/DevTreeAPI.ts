@@ -1,5 +1,5 @@
 import {clienteAxios} from "../axios/ClienteAxios";
-import type {UserLinksToUpdate, UsuarioLogeado, UsuarioUpdate, UsuarioUpdateLinks} from "../types";
+import type {UserLinksToUpdate, UsuarioLogeado, UsuarioUpdate} from "../types";
 
 export async function getUsuarioEnSesion() {
     try {
