@@ -1,5 +1,5 @@
 import {clienteAxios} from "../axios/ClienteAxios";
-import type {UsuarioLogeado, UsuarioUpdate} from "../types";
+import type {UserLinksToUpdate, UsuarioLogeado, UsuarioUpdate, UsuarioUpdateLinks} from "../types";
 
 export async function getUsuarioEnSesion() {
     try {
@@ -39,6 +39,19 @@ export async function updateImagenPerfil(innformacion: FormData) {
             }
         });
         return  response.data;
+    }catch (e) {
+        throw e;
+    }
+}
+
+export async function usuarioUpdateLinks(links: UserLinksToUpdate) {
+    try {
+        const response = await clienteAxios.put("/usuarios/links", links, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("AUTH_JWT"),
+            }
+        });
+        return response.data;
     }catch (e) {
         throw e;
     }
