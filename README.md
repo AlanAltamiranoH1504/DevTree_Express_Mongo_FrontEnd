@@ -1,10 +1,8 @@
 # 🌳 DevTree - Frontend
 
-El frontend de **DevTree**, una plataforma tipo **Linktree** que permite a los usuarios crear y gestionar una página personalizada con múltiples enlaces a redes sociales, sitios web y más.
+El frontend de DevTree, una plataforma tipo Linktree que permite a los usuarios crear y gestionar una página personalizada con múltiples enlaces a redes sociales, sitios web y más.
 
-Construido con **React**, **TypeScript** y **React Query** para la gestión eficiente de datos asíncronos.
-
----
+Construido con React, TypeScript y React Query para una gestión eficiente de datos asíncronos.
 
 ## 🚀 Características
 
@@ -15,8 +13,17 @@ Construido con **React**, **TypeScript** y **React Query** para la gestión efic
 - 🎨 Diseño modular y componentes reutilizables
 - 📦 Preparado para producción con optimización y bundling
 
----
-
 ## ⚠️ Estado
+✅ El proyecto se encuentra completado. Todas las funcionalidades principales están implementadas y es funcional para su uso.
 
-El proyecto sigue en desarrollo y nuevas funcionalidades y mejoras se irán incorporando pronto.
+## 🛠️ Instalación
+
+1. Clona el repositorio:
+git clone https://github.com/tu-usuario/devtree-frontend.git
+
+2. Instala dependencias
+npm install
+
+3. Ejecut el proyecto
+npm run dev
+
