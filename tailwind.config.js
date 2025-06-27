@@ -5,7 +5,11 @@ export default {
       "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+        backgroundImage: {
+            "home": "url('/bg.svg')"
+        }
+    },
   },
   plugins: [
       require('@tailwindcss/forms')

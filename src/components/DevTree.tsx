@@ -1,5 +1,5 @@
 import NavigationTabs from "./NavigationTabs";
-import {Link, Outlet} from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import type {SocialNetwork, UsuarioLogeado} from "../types";
 import {useEffect, useState} from "react";
 import LinkHabiltado from "./LinkHabiltado";
@@ -8,13 +8,19 @@ type DevTreeProps = {
     data: UsuarioLogeado
 }
 const DevTree = ({data}: DevTreeProps) => {
+    const navigate = useNavigate();
     const imagenPerfil = data.urlImagen.trim() === "" ? "/public/perfil.png" : data.urlImagen;
     const linksArreglo = JSON.parse(data.links);
     const linksHabilitados = linksArreglo.filter((link: SocialNetwork) => {
         return link.enabled;
     });
-
     const [enableLinks, setEnableLinks] = useState<SocialNetwork[]>(linksHabilitados);
+
+    const cerrarSesion: () => void = () => {
+        localStorage.removeItem("AUTH_JWT");
+        navigate("/auth/login");
+    }
+
     useEffect(() => {
         setEnableLinks(linksArreglo.filter((link: SocialNetwork) => {
             return link.enabled;
@@ -30,7 +36,7 @@ const DevTree = ({data}: DevTreeProps) => {
                     <div className="md:w-1/3 md:flex md:justify-end">
                         <button
                             onClick={() => {
-                                console.log("Cerrando sesion")
+                                cerrarSesion();
                             }}
                             className="bg-lime-500 p-2 text-slate-900 uppercase font-black text-xs rounded-lg cursor-pointer">
                             Cerrar Sesión

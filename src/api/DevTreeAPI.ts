@@ -1,5 +1,5 @@
 import {clienteAxios} from "../axios/ClienteAxios";
-import type {UserByHandle, UserLinksToUpdate, UsuarioLogeado, UsuarioUpdate} from "../types";
+import type {SearchHandleRegister, UserByHandle, UserLinksToUpdate, UsuarioLogeado, UsuarioUpdate} from "../types";
 
 export async function getUsuarioEnSesion() {
     try {
@@ -62,6 +62,16 @@ export async function findUserByHandle(handle: string) {
     // eslint-disable-next-line no-useless-catch
     try {
         const {data} = await clienteAxios.get<UserByHandle>(`/usuarios/${handle}`);
+        return data;
+    }catch (e) {
+        throw e;
+    }
+}
+
+export async function searchHandleReistrado(handle: string) {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const {data} = await clienteAxios.post<SearchHandleRegister>("/usuarios/handle", {handle});
         return data;
     }catch (e) {
         throw e;

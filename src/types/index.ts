@@ -42,3 +42,4 @@ export type UserLinksToUpdate = {
 }
 
 export type UserByHandle = Pick<UsuarioLogeado, "nombre" | "handle" | "descripcion" | "urlImagen" | "links">
+export type SearchHandleRegister = Pick<UsuarioLogeado, "handle">;

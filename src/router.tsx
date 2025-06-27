@@ -6,6 +6,7 @@ import AppLayout from "./layouts/AppLayout";
 import LinkTreeView from "./views/LinkTreeView";
 import PerfilView from "./views/PerfilView";
 import HandleView from "./views/HandleView";
+import HomeView from "./views/HomeView";
 
 export default function router() {
     return (
@@ -26,6 +27,11 @@ export default function router() {
                 {/*Rutas de area publica*/}
                 <Route path={"/:handle"} element={<AuthLayout/>}>
                     <Route index={true} element={<HandleView/>}/>
+                </Route>
+
+                {/*Rutas de home o pagina principal*/}
+                <Route>
+                    <Route path="" element={<HomeView/>}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>
