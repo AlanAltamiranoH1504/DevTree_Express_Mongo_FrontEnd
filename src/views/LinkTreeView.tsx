@@ -12,6 +12,7 @@ const LinkTreeView = () => {
     const [devTreeLinks, setDevTreeLinks] = useState(social);
     const queryClient = useQueryClient();
     const userInCache = queryClient.getQueryData(["usuarioInSession"]);
+    // @ts-ignore
     const linksJson = JSON.parse(userInCache.links);
 
     const mutationLinks = useMutation({

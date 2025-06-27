@@ -1,5 +1,5 @@
 import {clienteAxios} from "../axios/ClienteAxios";
-import type {UserLinksToUpdate, UsuarioLogeado, UsuarioUpdate} from "../types";
+import type {UserByHandle, UserLinksToUpdate, UsuarioLogeado, UsuarioUpdate} from "../types";
 
 export async function getUsuarioEnSesion() {
     try {
@@ -45,6 +45,7 @@ export async function updateImagenPerfil(innformacion: FormData) {
 }
 
 export async function usuarioUpdateLinks(links: UserLinksToUpdate) {
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await clienteAxios.put("/usuarios/links", links, {
             headers: {
@@ -52,6 +53,16 @@ export async function usuarioUpdateLinks(links: UserLinksToUpdate) {
             }
         });
         return response.data;
+    }catch (e) {
+        throw e;
+    }
+}
+
+export async function findUserByHandle(handle: string) {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const {data} = await clienteAxios.get<UserByHandle>(`/usuarios/${handle}`);
+        return data;
     }catch (e) {
         throw e;
     }

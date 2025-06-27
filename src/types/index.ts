@@ -40,3 +40,5 @@ export type DevTreeLink = Pick<SocialNetwork, "nombre" | "url" | "enabled">
 export type UserLinksToUpdate = {
     links: DevTreeLink[];
 }
+
+export type UserByHandle = Pick<UsuarioLogeado, "nombre" | "handle" | "descripcion" | "urlImagen" | "links">
